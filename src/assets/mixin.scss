@@ -1,0 +1,14 @@
+// 命名规则：对象+(场景)+属性
+@mixin pageColor {
+	--stroke-hint-color: #f9f;
+	--stroke-hint-error-color: #e42;
+	--font-color: #818189;
+	--font-hint-color: #c9c9d9;
+	--font-hover-color: #fcf;
+	--component-background-color: #fff;
+	--component-hint-color: #fff8ff;
+}
+
+@mixin pageShadow {
+	--component-shadow-light: 0 1px 3px rgba(143, 136, 143, 0.3);
+}
