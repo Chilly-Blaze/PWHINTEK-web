@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-05-03 10:09:33
- * @LastEditTime: 2022-05-15 19:52:22
+ * @LastEditTime: 2022-05-20 20:56:38
  * @FilePath: /front-end/src/assets/mixin.scss
  * @Description: 统一变量定义
  * 命名规则：对象+(场景)+属性
@@ -10,7 +10,9 @@
 @mixin pagePara {
 	--background-color: #fffcff;
 	--stroke-hint-color: #f9f;
-	--stroke-hint-error-color: #e42;
+	--stroke-hint-success-color: #084;
+	--stroke-hint-warn-color: #fb5;
+	--stroke-hint-error-color: #f00;
 	--font-color: #818189;
 	--font-hint-color: #c9c9d9;
 	--font-hover-color: #fcf;
@@ -21,6 +23,7 @@
 
 	--common-border-radius: 8px;
 
+	--hint-font-size: 13px;
 	--common-font-size: 16px;
 	--highlight-font-size: 20px;
 }
