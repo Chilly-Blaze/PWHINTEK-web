@@ -1,23 +1,23 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-03 19:29:39
- * @LastEditTime: 2022-05-10 09:58:38
- * @FilePath: /front-end/src/components/TextInput.vue
+ * @LastEditTime: 2022-05-20 10:42:23
+ * @FilePath: /front-end/src/components/Input/PTextInput.vue
  * @Description: 文本输入组件，子组件InputTamplate通过插槽集成整体清除动画
 -->
 
 <template>
-	<InputSampleVue
-		ref="msg"
+	<PInputSampleVue
 		:width="props.width"
 		:height="props.height"
-		:isCorrect="data.isCorrect"
+		:isCorrect="props.isCorrect"
 		:msg="props.msg"
-		type="text"
+		ref="msg"
 		v-model="text"
 	>
 		<template #feature>
 			<button
+				ref="clear"
 				class="clear"
 				:class="{ clearing: data.isClick }"
 				@click="clickDel"
@@ -30,11 +30,11 @@
 				</svg>
 			</button>
 		</template>
-	</InputSampleVue>
+	</PInputSampleVue>
 </template>
 
 <script setup lang="ts">
-	import InputSampleVue from './InputTemplate.vue'
+	import PInputSampleVue from './PInputTemplate.vue'
 	import { ref, reactive, computed, watch, readonly } from 'vue'
 	import gsap from 'gsap'
 
@@ -48,11 +48,13 @@
 			width: number
 			height: number
 			msg: string
+			isCorrect: boolean
 			modelValue?: string
 		}>(),
 		{
 			width: 240,
 			height: 48,
+			isCorrect: true,
 			msg: 'placeholder',
 		},
 	)
@@ -69,6 +71,12 @@
 
 	/**
 	 * data段
+	 * 获取全局唯一button按钮dom内容，防止gsap动画串台
+	 */
+	let clear = ref<HTMLButtonElement>()
+
+	/**
+	 * data段
 	 * 用于绑定输入框内容
 	 */
 	let text = ref('')
@@ -80,16 +88,6 @@
 	const data = reactive({
 		// 标记是否点击
 		isClick: false,
-		// 标记输入是否正确
-		isCorrect: true,
-	})
-
-	/**
-	 * expose段
-	 * 暴露data.isCorrect便于父组件控制显示
-	 */
-	defineExpose({
-		isCorrect: data.isCorrect,
 	})
 
 	/**
@@ -147,21 +145,22 @@
 	 */
 	watch(text, (newValue: string) => {
 		let bool = newValue.length > 0
+		let elem = clear.value!
 		emit('update:modelValue', newValue)
-		gsap.to('.clear', {
+		gsap.to(elem, {
 			onStart() {
-				gsap.set('.clear', { display: 'block' })
+				gsap.set(elem, { display: 'block' })
 			},
 			'--clear-scale': bool ? 1 : 0,
 			duration: bool ? 0.5 : 0.15,
 			ease: bool ? 'elastic.out(1, .7)' : 'none',
 			onComplete() {
 				if (!bool) {
-					gsap.set('.clear', { display: 'none' })
+					gsap.set(elem, { display: 'none' })
 				}
 			},
 		})
-		gsap.to('.clear', {
+		gsap.to(elem, {
 			'--clear-opacity': bool ? 1 : 0,
 			duration: 0.15,
 		})
@@ -173,7 +172,7 @@
 	 */
 	function clickDel() {
 		data.isClick = true
-		let elem = '.clear'
+		let elem = clear.value!
 		let tl = gsap.timeline()
 		// 输入框失焦, 定位初始长度
 		tl.set(elem, {

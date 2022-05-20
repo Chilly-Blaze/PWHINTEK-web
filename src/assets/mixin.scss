@@ -1,5 +1,14 @@
-// 命名规则：对象+(场景)+属性
-@mixin pageColor {
+/*
+ * @Author: ChillyBlaze
+ * @Date: 2022-05-03 10:09:33
+ * @LastEditTime: 2022-05-15 19:52:22
+ * @FilePath: /front-end/src/assets/mixin.scss
+ * @Description: 统一变量定义
+ * 命名规则：对象+(场景)+属性
+ */
+
+@mixin pagePara {
+	--background-color: #fffcff;
 	--stroke-hint-color: #f9f;
 	--stroke-hint-error-color: #e42;
 	--font-color: #818189;
@@ -7,8 +16,11 @@
 	--font-hover-color: #fcf;
 	--component-background-color: #fff;
 	--component-hint-color: #fff8ff;
-}
 
-@mixin pageShadow {
-	--component-shadow-light: 0 1px 3px rgba(143, 136, 143, 0.3);
+	--component-light-shadow: 0 1px 3px rgba(143, 136, 143, 0.3);
+
+	--common-border-radius: 8px;
+
+	--common-font-size: 16px;
+	--highlight-font-size: 20px;
 }

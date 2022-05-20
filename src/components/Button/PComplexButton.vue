@@ -1,15 +1,16 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 18:28:03
- * @LastEditTime: 2022-05-10 09:44:46
- * @FilePath: /front-end/src/components/Buttom.vue
- * @Description: 通用化按钮组件，向外返回响应事件
+ * @LastEditTime: 2022-05-16 17:58:06
+ * @FilePath: /front-end/src/components/Button/PComplexButton.vue
+ * @Description: 花里胡哨一些的按钮
 -->
 
 <template>
 	<div
 		class="svg-buttom"
 		@touchstart="mouseDown"
+		@touchend="mouseUp"
 		@mousedown="mouseDown"
 		@mouseup="mouseUp"
 		@mouseleave="mouseUp"
@@ -32,12 +33,10 @@
 	 */
 	const props = withDefaults(
 		defineProps<{
-			msg: string
 			width: number
 			height: number
 		}>(),
 		{
-			msg: 'button',
 			width: 110,
 			height: 40,
 		},
@@ -76,15 +75,14 @@
 	// 总样式
 	.svg-buttom {
 		// 全局变量
-		@include pageColor;
-		@include pageShadow;
+		@include pagePara;
 		--height: v-bind('stylePara.height');
 		--width: v-bind('stylePara.width');
 		--animation-para: 2s cubic-bezier(0.215, 0.61, 0.355, 1)
 			forwards;
 		// 显示样式
 		position: relative;
-		background-color: var(--component-background-color);
+		background-color: transparent;
 
 		// SVG动画
 		svg {
@@ -114,8 +112,8 @@
 			position: absolute;
 			top: 0;
 			// 自身属性
-			font-size: 20px;
 			cursor: pointer;
+			font-size: var(--highlight-font-size);
 			text-align: center;
 			color: var(--font-color);
 			line-height: var(--height);
@@ -130,18 +128,21 @@
 			}
 			// 文字样式
 			.text {
+				font-size: calc(var(--highlight-font-size) * 1.1);
 				border-radius: 8px;
-				box-shadow: var(--component-shadow-light);
-				transition: box-shadow 0.3s ease-in-out,
-					color 0.8s ease-in-out 0.5s,
-					border-radius 0.8s ease-in-out 0.8s;
+				box-shadow: var(--component-light-shadow);
+				transition: box-shadow 0.2s ease-in-out,
+					color 0.6s ease-in-out 0.2s,
+					border-radius 0.6s ease-in-out 0.6s,
+					font-size 0.1s ease-in-out;
 				color: var(--font-hover-color);
 			}
 			// 点击动画
 			.mouse-down {
+				font-size: calc(var(--highlight-font-size) * 0.9);
 				box-shadow: none;
 				background-color: var(--component-hint-color);
-				transition: 0.3s ease-out;
+				transition: 0.1s linear;
 			}
 		}
 

@@ -10,8 +10,10 @@
   "dependencies": {
     "axios": "^0.26.1",
     "gsap": "^3.10.4",
+    "naive-ui": "^2.28.4",
     "pinia": "^2.0.13",
     "sass": "^1.50.1",
+    "vfonts": "^0.0.3",
     "vue": "^3.2.33",
     "vue-router": "^4.0.14"
   },

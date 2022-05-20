@@ -1,8 +1,8 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-27 21:32:13
- * @LastEditTime: 2022-05-09 22:10:15
- * @FilePath: /front-end/src/components/InputTemplate.vue
+ * @LastEditTime: 2022-05-16 22:00:54
+ * @FilePath: /front-end/src/components/Input/InputTemplate.vue
  * @Description: 通用化输入框组件，返回输入值
 -->
 <template>
@@ -10,12 +10,17 @@
 		<input
 			ref="input"
 			:value="props.modelValue"
-			:type="props.type"
 			:placeholder="props.msg"
 			@input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
 		/>
 		<svg class="hint">
-			<line x1="1" y1="5" :x2="props.width + 'px'" y2="5" />
+			<line
+				ref="line"
+				x1="1"
+				y1="5"
+				:x2="props.width + 'px'"
+				y2="5"
+			/>
 		</svg>
 		<slot name="feature" />
 	</div>
@@ -32,8 +37,6 @@
 		// 输入框长宽
 		width: number
 		height: number
-		// 输入框类型
-		type: 'text' | 'password'
 		// 输入内容是否正确
 		isCorrect: boolean
 		modelValue?: string
@@ -47,14 +50,19 @@
 
 	/**
 	 * data段
-	 * 获取输入框dom
+	 * 获取dom
 	 */
 	let input = ref<HTMLInputElement>()
+	let line = ref<SVGLineElement>()
 	/**
 	 * data段
 	 * 输入框提示色，受props.isCorrect控制
 	 */
-	let hintResponsiveColor = ref<string>('var(--stroke-hint-color)')
+	let hintResponsiveColor = ref<string>(
+		props.isCorrect
+			? 'var(--stroke-hint-color)'
+			: 'var(--stroke-hint-error-color)',
+	)
 
 	/**
 	 * expose段
@@ -78,7 +86,7 @@
 					? props.width - props.height * 2
 					: lineLength
 			let dasharray = lineLength + ' 10000'
-			gsap.to('line', {
+			gsap.to(line.value!, {
 				'stroke-dasharray': dasharray,
 				duration: 0.2,
 				ease: 'elastic.out(2, .3)',
@@ -104,8 +112,7 @@
 <style scoped lang="scss">
 	@import '@/assets/mixin.scss';
 	.input {
-		@include pageColor;
-		@include pageShadow;
+		@include pagePara;
 		// 输入框长宽
 		--height: v-bind('props.height + "px"');
 		--width: v-bind('props.width + "px"');
@@ -117,7 +124,7 @@
 		overflow: hidden;
 		border-radius: 8px;
 		background: var(--component-background-color);
-		box-shadow: var(--component-shadow-light);
+		box-shadow: var(--component-light-shadow);
 		transition: box-shadow 0.2s;
 
 		// 输入框

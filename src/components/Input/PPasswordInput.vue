@@ -1,16 +1,16 @@
 <template>
-	<InputTemplate
-		ref="msg"
+	<PInputTemplate
 		:width="240"
 		:height="48"
-		msg="Password"
-		:type="textType"
-		:isCorrect="true"
+		:msg="props.msg"
+		:isCorrect="props.isCorrect"
+		ref="msg"
+		v-model="text"
 		@mousemove="handleMousemove"
 		@mouseleave="handleMouseleave"
 	>
 		<template #feature>
-			<button class="clear" @click="switchType">
+			<button ref="clear" class="clear" @click="switchType">
 				<svg viewBox="0 0 21 21">
 					<circle
 						class="eye"
@@ -33,47 +33,61 @@
 				</svg>
 			</button>
 		</template>
-	</InputTemplate>
+	</PInputTemplate>
 </template>
 
 <script setup lang="ts">
-	import InputTemplate from '@/components/Input/InputTemplate.vue'
-	import { reactive, watch, computed, ref, readonly } from 'vue'
+	import PInputTemplate from '@/components/Input/PInputTemplate.vue'
+	import {
+		reactive,
+		watch,
+		computed,
+		ref,
+		readonly,
+		onMounted,
+	} from 'vue'
 	import gsap from 'gsap'
 
 	/**
 	 * props段
-	 * 接收外部传入宽高和placeholder
+	 * 接收外部传入宽高和placeholder，v-model
 	 */
 	const props = withDefaults(
 		defineProps<{
 			width: number
 			height: number
 			msg: string
+			isCorrect: boolean
+			modelValue?: string
 		}>(),
 		{
 			width: 240,
 			height: 48,
-			msg: 'placeholder',
+			isCorrect: true,
+			msg: 'Password',
 		},
 	)
 
 	/**
 	 * data段
-	 * 存储svg动画绑定参数
+	 * 获取全局唯一button按钮dom内容，防止gsap动画串台
 	 */
-	const data = reactive({
-		// 标记是否隐藏密码
-		isHide: true,
-		// 标记输入是否正确
-		isCorrect: true,
-	})
+	let clear = ref<HTMLButtonElement>()
+
 	/**
-	 * expose段
-	 * 暴露data.isCorrect便于父组件控制显示
+	 * data段
+	 * 存储文本信息，同步父组件v-model
 	 */
-	defineExpose({
-		isCorrect: data.isCorrect,
+	let text = ref('')
+	watch(
+		() => props.modelValue,
+		(val) => {
+			text.value = val || ''
+		},
+	)
+	const emit = defineEmits(['update:modelValue'])
+	watch(text, (val) => {
+		emit('update:modelValue', val)
 	})
 
 	/**
@@ -85,15 +99,23 @@
 		x: 0,
 		y: 0,
 	})
-	/**
-	 * data段
-	 * 未加工的d，5.5表示上半弧，15.5表示下半弧
-	 */
-	const rawD = ref(5.5)
 
 	/**
-	 * raw段
-	 * 一些只计算一次的用于动画定位的参数内容
+	 * data段
+	 * 5.5表示上半弧，15.5表示下半弧
+	 */
+	const rawD = ref(5.5)
+	/**
+	 * computed段
+	 * 计算d
+	 */
+	const d = computed(() => {
+		return `M2 10.5C2 10.5 6.43686 ${rawD.value} 10.5 ${rawD.value}C14.5631 ${rawD.value} 19 10.5 19 10.5`
+	})
+
+	/**
+	 * readonly段
+	 * 一些计算参数
 	 */
 	const rawData = readonly({
 		inputWidthBefore: -props.width + props.height + 5 + 'px',
@@ -111,21 +133,10 @@
 	 * 默认undefined，子组件加载完成之后会被赋值
 	 */
 	let msg = ref<exposeData>()
+	onMounted(() => {
+		msg.value!.input.type = 'password'
+	})
 
-	/**
-	 * computed段
-	 * 计算输入框类型
-	 */
-	const textType = computed(() => {
-		return data.isHide ? 'password' : 'text'
-	})
-	/**
-	 * computed段
-	 * 计算d
-	 */
-	const d = computed(() => {
-		return `M2 10.5C2 10.5 6.43686 ${rawD.value} 10.5 ${rawD.value}C14.5631 ${rawD.value} 19 10.5 19 10.5`
-	})
 	/**
 	 * methods段
 	 * 用于监视鼠标在输入框内移动位置，设置眼珠看向指定位置
@@ -159,9 +170,11 @@
 	 * 切换输入框类型
 	 */
 	function switchType() {
-		if (data.isHide) {
+		let v = clear.value!
+		let type = msg.value?.input.type
+		if (type === 'password') {
 			gsap.timeline()
-				.to('.clear', {
+				.to(v, {
 					'--eye-s': 0,
 					'--eye-background': 0,
 					duration: 0.2,
@@ -174,14 +187,14 @@
 					},
 					'-=0.08',
 				)
-				.to('.clear', {
+				.to(v, {
 					'--eye-offset': '0px',
 					duration: 0.1,
 					onComplete() {
-						data.isHide = false
+						msg.value!.input.type = 'text'
 					},
 				})
-			gsap.to('.clear', {
+			gsap.to(v, {
 				'--clear-swipe-top': 1,
 				duration: 1.5,
 				ease: 'slow(0.5, 0.7, false)',
@@ -191,11 +204,11 @@
 			})
 		} else {
 			gsap.timeline()
-				.to('.clear', {
+				.to(v, {
 					'--eye-offset': '3px',
 					duration: 0.1,
 				})
-				.to('.clear', {
+				.to(v, {
 					'--eye-s': 1,
 					'--eye-background': 0,
 					'--eye-offset': '3px',
@@ -207,12 +220,12 @@
 						value: 5.5,
 						duration: 0.5,
 						onComplete() {
-							data.isHide = true
+							msg.value!.input.type = 'password'
 						},
 					},
 					'-=0.1',
 				)
-			gsap.to('.clear', {
+			gsap.to(v, {
 				'--clear-swipe-top': -1,
 				duration: 1.5,
 				ease: 'slow(0.5, 0.7, false)',
