@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 20:46:09
- * @LastEditTime: 2022-05-22 13:32:08
+ * @LastEditTime: 2022-05-22 19:51:07
  * @FilePath: /front-end/src/views/Login/index.vue
  * @Description: 登录界面
 -->
@@ -47,45 +47,42 @@
 					@click="toggle(true)"
 					>&lt去登录</PEButton
 				>
-				<NPopover
-					trigger="click"
-					placement="left-end"
-					style="box-shadow: none"
+				<PPopover
+					placement="left-start"
+					:judge="!isNickname || false"
+					:msg="readonlyData.msg.nickname"
 				>
-					<template #trigger>
-						<PTInput
-							v-model="data.nickname"
-							:isCorrect="isNickname"
-							class="input-style"
-							msg="昵称"
-						/>
-					</template>
-					<div
-						v-if="!isNickname"
-						style="
-							width: 100px;
-							height: 100px;
-							background-color: red;
-							transform-origin: inherit;
-							box-shadow: 1px 1px 1px #000;
-						"
-					>
-						Who kicks a hole in the sky so the heaven cry
-						over me.
-					</div>
-				</NPopover>
-				<PTInput
-					v-model="data.username"
-					:isCorrect="isUsername"
-					class="input-style"
-					msg="用户名"
-				/>
-				<PPInput
-					v-model="data.password"
-					:isCorrect="isPassword"
-					class="input-style"
-					msg="密码"
-				/>
+					<PTInput
+						v-model="data.nickname"
+						:isCorrect="isNickname"
+						class="input-style"
+						msg="昵称"
+					/>
+				</PPopover>
+				<PPopover
+					placement="left"
+					:judge="!isUsername || false"
+					:msg="readonlyData.msg.username"
+				>
+					<PTInput
+						v-model="data.username"
+						:isCorrect="isUsername"
+						class="input-style"
+						msg="用户名"
+					/>
+				</PPopover>
+				<PPopover
+					placement="left-end"
+					:judge="!isPassword || false"
+					:msg="readonlyData.msg.password"
+				>
+					<PPInput
+						v-model="data.password"
+						:isCorrect="isPassword"
+						class="input-style"
+						msg="密码"
+					/>
+				</PPopover>
 				<PCButton class="button-style">PONG!</PCButton>
 			</div>
 		</div>
@@ -93,7 +90,6 @@
 </template>
 
 <script setup lang="ts">
-	import { NPopover } from 'naive-ui'
 	import Login from './svg/Login.vue'
 	import Signup from './svg/Signup.vue'
 	import {
@@ -101,6 +97,7 @@
 		PEButton,
 		PPInput,
 		PTInput,
+		PPopover,
 	} from '@/components'
 	import { reactive, ref, readonly, computed } from 'vue'
 	import gsap from 'gsap'
@@ -119,7 +116,7 @@
 	function check(type: string, value: string) {
 		const regs = new Map([
 			['u', /^\w{4,32}$/],
-			['p', /^[A-Za-z0-9._~!@#$^&*]{6,20}$/],
+			['p', /^[A-Za-z0-9._~!@#$^&*]{6,}$/],
 			['n', /^[\u4e00-\u9fa5\w\u0800-\u4e00\x20]{1,10}$/],
 		])
 		return regs.get(type)?.test(value)
@@ -141,6 +138,12 @@
 	 */
 	const readonlyData = readonly({
 		bgRandom: Math.random() * 400 - 200 + 'px',
+		msg: {
+			nickname: '1-10位，可以使用中英日文，数字和下划线~',
+			username: '4-32位，可以使用英文数字和下划线~',
+			password:
+				'6位以上，可以使用中英文和或者一些不会引发奇怪反应的安全字符(._~!@#$^&*)~',
+		},
 	})
 
 	/**

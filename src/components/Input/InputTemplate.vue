@@ -1,12 +1,12 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-27 21:32:13
- * @LastEditTime: 2022-05-21 21:56:41
- * @FilePath: /front-end/src/components/Input/PInputTemplate.vue
+ * @LastEditTime: 2022-05-22 19:58:09
+ * @FilePath: /front-end/src/components/Input/InputTemplate.vue
  * @Description: 通用化输入框组件，返回输入值
 -->
 <template>
-	<div class="input" tabindex="1">
+	<div class="input">
 		<input
 			ref="input"
 			:value="props.modelValue"

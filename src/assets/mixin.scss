@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-05-03 10:09:33
- * @LastEditTime: 2022-05-20 20:56:38
+ * @LastEditTime: 2022-05-22 19:02:45
  * @FilePath: /front-end/src/assets/mixin.scss
  * @Description: 统一变量定义
  * 命名规则：对象+(场景)+属性
@@ -22,8 +22,9 @@
 	--component-light-shadow: 0 1px 3px rgba(143, 136, 143, 0.3);
 
 	--common-border-radius: 8px;
+	--common-padding: 5px 12px;
 
-	--hint-font-size: 13px;
+	--hint-font-size: 14px;
 	--common-font-size: 16px;
 	--highlight-font-size: 20px;
 }

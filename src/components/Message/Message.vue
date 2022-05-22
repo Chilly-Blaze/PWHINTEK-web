@@ -1,8 +1,8 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-20 10:36:52
- * @LastEditTime: 2022-05-20 21:00:14
- * @FilePath: /front-end/src/components/Message/PMessage.vue
+ * @LastEditTime: 2022-05-22 19:01:46
+ * @FilePath: /front-end/src/components/Message/Message.vue
  * @Description: 通用消息组件，传入MessageType触发消息类型
 -->
 <template>
@@ -63,7 +63,7 @@
 		cursor: pointer;
 		display: flex;
 		position: relative;
-		padding: 5px 12px;
+		padding: var(common-padding);
 		max-width: calc(100vw - 60px);
 		align-items: flex-end;
 		justify-content: center;
