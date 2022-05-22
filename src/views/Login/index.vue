@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 20:46:09
- * @LastEditTime: 2022-05-20 10:46:49
+ * @LastEditTime: 2022-05-22 13:32:08
  * @FilePath: /front-end/src/views/Login/index.vue
  * @Description: 登录界面
 -->
@@ -19,76 +19,90 @@
 				<div class="login-bgimg">
 					<img src="/img/login_pic.png" />
 				</div>
-				<PEasyButton
+				<PEButton
 					class="front-hint-style"
 					@click="toggle(false)"
-					>去注册&gt</PEasyButton
+					>去注册&gt</PEButton
 				>
-				<PTextInput
+				<PTInput
 					v-model="data.username"
 					:isCorrect="isUsername"
 					class="input-style"
 					msg="用户名"
 				/>
-				<PPasswordInput
+				<PPInput
 					v-model="data.password"
 					:isCorrect="isPassword"
 					class="input-style"
 					msg="密码"
 				/>
-				<PComplexButton class="button-style"
-					>PONG!</PComplexButton
-				>
+				<PCButton class="button-style">PONG!</PCButton>
 			</div>
 			<div class="signup">
 				<div class="login-bgimg">
 					<img src="/img/login_pic.png" />
 				</div>
-				<PEasyButton
+				<PEButton
 					class="back-hint-style"
 					@click="toggle(true)"
-					>&lt去登录</PEasyButton
+					>&lt去登录</PEButton
 				>
-				<PTextInput
-					v-model="data.nickname"
-					:isCorrect="isNickname"
-					class="input-style"
-					msg="昵称"
-				/>
-				<PTextInput
+				<NPopover
+					trigger="click"
+					placement="left-end"
+					style="box-shadow: none"
+				>
+					<template #trigger>
+						<PTInput
+							v-model="data.nickname"
+							:isCorrect="isNickname"
+							class="input-style"
+							msg="昵称"
+						/>
+					</template>
+					<div
+						v-if="!isNickname"
+						style="
+							width: 100px;
+							height: 100px;
+							background-color: red;
+							transform-origin: inherit;
+							box-shadow: 1px 1px 1px #000;
+						"
+					>
+						Who kicks a hole in the sky so the heaven cry
+						over me.
+					</div>
+				</NPopover>
+				<PTInput
 					v-model="data.username"
 					:isCorrect="isUsername"
 					class="input-style"
 					msg="用户名"
 				/>
-				<PPasswordInput
+				<PPInput
 					v-model="data.password"
 					:isCorrect="isPassword"
 					class="input-style"
 					msg="密码"
 				/>
-				<PComplexButton class="button-style"
-					>PONG!</PComplexButton
-				>
+				<PCButton class="button-style">PONG!</PCButton>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+	import { NPopover } from 'naive-ui'
 	import Login from './svg/Login.vue'
 	import Signup from './svg/Signup.vue'
-	import PComplexButton from '@/components/Button/PComplexButton.vue'
-	import PTextInput from '@/components/Input/PTextInput.vue'
-	import PPasswordInput from '@/components/Input/PPasswordInput.vue'
-	import PEasyButton from '../../components/Button/PEasyButton.vue'
 	import {
-		reactive,
-		ref,
-		readonly,
-		watchEffect,
-		computed,
-	} from 'vue'
+		PCButton,
+		PEButton,
+		PPInput,
+		PTInput,
+	} from '@/components'
+	import { reactive, ref, readonly, computed } from 'vue'
 	import gsap from 'gsap'
 
 	/**
@@ -108,7 +122,6 @@
 			['p', /^[A-Za-z0-9._~!@#$^&*]{6,20}$/],
 			['n', /^[\u4e00-\u9fa5\w\u0800-\u4e00\x20]{1,10}$/],
 		])
-		console.log(regs.get(type)?.test(value))
 		return regs.get(type)?.test(value)
 	}
 

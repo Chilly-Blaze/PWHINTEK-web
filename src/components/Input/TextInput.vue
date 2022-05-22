@@ -1,13 +1,13 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-03 19:29:39
- * @LastEditTime: 2022-05-20 10:42:23
- * @FilePath: /front-end/src/components/Input/PTextInput.vue
+ * @LastEditTime: 2022-05-22 13:37:32
+ * @FilePath: /front-end/src/components/Input/TextInput.vue
  * @Description: 文本输入组件，子组件InputTamplate通过插槽集成整体清除动画
 -->
 
 <template>
-	<PInputSampleVue
+	<PInputTemp
 		:width="props.width"
 		:height="props.height"
 		:isCorrect="props.isCorrect"
@@ -30,11 +30,11 @@
 				</svg>
 			</button>
 		</template>
-	</PInputSampleVue>
+	</PInputTemp>
 </template>
 
 <script setup lang="ts">
-	import PInputSampleVue from './PInputTemplate.vue'
+	import { PInputTemp } from '..'
 	import { ref, reactive, computed, watch, readonly } from 'vue'
 	import gsap from 'gsap'
 

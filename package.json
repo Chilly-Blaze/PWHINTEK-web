@@ -15,7 +15,8 @@
     "sass": "^1.50.1",
     "vfonts": "^0.0.3",
     "vue": "^3.2.33",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.14",
+    "vueuc": "^0.4.37"
   },
   "devDependencies": {
     "@types/node": "^16.11.27",

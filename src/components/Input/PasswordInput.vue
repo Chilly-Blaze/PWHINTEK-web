@@ -1,5 +1,5 @@
 <template>
-	<PInputTemplate
+	<PInputTemp
 		:width="240"
 		:height="48"
 		:msg="props.msg"
@@ -33,11 +33,11 @@
 				</svg>
 			</button>
 		</template>
-	</PInputTemplate>
+	</PInputTemp>
 </template>
 
 <script setup lang="ts">
-	import PInputTemplate from '@/components/Input/PInputTemplate.vue'
+	import { PInputTemp } from '..'
 	import {
 		reactive,
 		watch,
