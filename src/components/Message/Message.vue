@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-20 10:36:52
- * @LastEditTime: 2022-05-22 19:01:46
+ * @LastEditTime: 2022-05-22 22:39:32
  * @FilePath: /front-end/src/components/Message/Message.vue
  * @Description: 通用消息组件，传入MessageType触发消息类型
 -->
@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, nextTick, ref, onMounted, readonly } from 'vue'
+	import { ref, onMounted, readonly } from 'vue'
 	import type { MessageType } from 'naive-ui'
 	import gsap from 'gsap'
 
@@ -30,7 +30,7 @@
 
 	const main = ref<HTMLDivElement>()
 	onMounted(() => {
-		if (main.value!.offsetHeight > 34) {
+		if (main.value!.offsetHeight > 50) {
 			const decoration =
 				main.value?.getElementsByClassName('decoration')
 			gsap.set(main.value!, {
@@ -58,12 +58,12 @@
 		--font-size: var(--hint-font-size);
 		--display-color: var(--component-background-color);
 		background-color: var(--component-background-color);
-		font-size: var(--font-size);
+		font-size: var(--hint-font-size);
 		user-select: none;
 		cursor: pointer;
 		display: flex;
 		position: relative;
-		padding: var(common-padding);
+		padding: var(--common-padding);
 		max-width: calc(100vw - 60px);
 		align-items: flex-end;
 		justify-content: center;
@@ -71,7 +71,7 @@
 		.decoration {
 			position: absolute;
 			width: calc(100% - 16px);
-			height: calc(var(--font-size) - 4px);
+			height: calc(1em - 4px);
 			background-color: var(--display-color);
 			opacity: 0.4;
 		}

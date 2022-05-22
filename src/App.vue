@@ -1,14 +1,15 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 12:59:27
- * @LastEditTime: 2022-05-20 21:01:05
+ * @LastEditTime: 2022-05-22 22:31:59
  * @FilePath: /front-end/src/App.vue
  * @Description: 入口组件
 -->
 <template>
-	<NMessageProvider>
+	<NMessageProvider :max="5">
 		<div class="router">
 			<RouterView />
+			<Test />
 		</div>
 	</NMessageProvider>
 </template>
@@ -16,6 +17,7 @@
 <script setup lang="ts">
 	import { RouterView } from 'vue-router'
 	import { NMessageProvider } from 'naive-ui'
+	import Test from './components/Test.vue'
 </script>
 
 <style lang="scss">

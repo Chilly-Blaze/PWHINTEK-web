@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 20:46:09
- * @LastEditTime: 2022-05-22 19:51:07
+ * @LastEditTime: 2022-05-22 22:42:01
  * @FilePath: /front-end/src/views/Login/index.vue
  * @Description: 登录界面
 -->
@@ -36,7 +36,9 @@
 					class="input-style"
 					msg="密码"
 				/>
-				<PCButton class="button-style">PONG!</PCButton>
+				<PCButton class="button-style" @click="login"
+					>PONG!</PCButton
+				>
 			</div>
 			<div class="signup">
 				<div class="login-bgimg">
@@ -83,7 +85,9 @@
 						msg="密码"
 					/>
 				</PPopover>
-				<PCButton class="button-style">PONG!</PCButton>
+				<PCButton class="button-style" @click="signup"
+					>PONG!</PCButton
+				>
 			</div>
 		</div>
 	</div>
@@ -98,9 +102,13 @@
 		PPInput,
 		PTInput,
 		PPopover,
+		PMessage,
 	} from '@/components'
 	import { reactive, ref, readonly, computed } from 'vue'
 	import gsap from 'gsap'
+	import { rLogin, rSignup } from '@/api'
+	import { useMessage } from 'naive-ui'
+	const message = useMessage()
 
 	/**
 	 * data段
@@ -191,6 +199,50 @@
 				ease: 'power2.out',
 				duration: 1,
 			})
+	}
+
+	/**
+	 * methods段
+	 * 登录
+	 */
+	async function login() {
+		if (isUsername.value && isPassword.value) {
+			try {
+				await rLogin(data.username, data.password)
+				message.success('登录成功', PMessage)
+			} catch (err: any) {
+				message.error(err, PMessage)
+			}
+		} else message.error('用户名或密码格式都输错了喵！', PMessage)
+	}
+
+	/**
+	 * methods段
+	 * 注册
+	 */
+	async function signup() {
+		//TODO: 统一封装Message提示文字信息，包括登录等
+		if (
+			isNickname.value &&
+			isUsername.value &&
+			isPassword.value
+		) {
+			try {
+				await rSignup(
+					data.username,
+					data.password,
+					data.nickname,
+				)
+				message.success('注册成功', PMessage)
+				toggle(true)
+			} catch (err: any) {
+				message.error(err, PMessage)
+			}
+		} else
+			message.error(
+				'能不能好好看看注册信息的提示文字呀baka！',
+				PMessage,
+			)
 	}
 </script>
 
