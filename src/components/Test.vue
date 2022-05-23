@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-28 12:43:42
- * @LastEditTime: 2022-05-22 22:21:50
+ * @LastEditTime: 2022-05-23 22:54:26
  * @FilePath: /front-end/src/components/Test.vue
  * @Description: 测试用例
 -->
@@ -13,14 +13,10 @@
 	import { useMessage } from 'naive-ui'
 	import { PMessage } from '@/components/Message'
 	import { rLogin, rSignup, rLogout } from '../api/index'
-	const message = useMessage()
-	async function test() {
-		try {
-			await rLogout()
-			message.success('登出成功', PMessage)
-		} catch (err: any) {
-			message.error(err, PMessage)
-		}
+	import { useRouter } from 'vue-router'
+	const router = useRouter()
+	function test() {
+		router.push('/login')
 	}
 </script>
 

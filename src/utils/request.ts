@@ -1,17 +1,11 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 14:12:27
- * @LastEditTime: 2022-05-22 21:51:00
+ * @LastEditTime: 2022-05-23 21:50:09
  * @FilePath: /front-end/src/utils/request.ts
  * @Description: Axios配置
  */
 import axios from 'axios'
-
-export type resposeData = {
-	ok: boolean
-	failMsg: string
-	data: any
-}
 
 const service = axios.create({
 	baseURL: '/api',
@@ -30,7 +24,7 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
 	(resp) => {
-		const res: resposeData = resp.data
+		const res: Result = resp.data
 		if (res.ok) return resp
 		else {
 			return Promise.reject(res.failMsg)

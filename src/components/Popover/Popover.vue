@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-21 20:55:25
- * @LastEditTime: 2022-05-22 20:02:01
+ * @LastEditTime: 2022-05-23 20:23:46
  * @FilePath: /front-end/src/components/Popover/Popover.vue
  * @Description: 通用化自定义Popover
 -->
@@ -19,7 +19,7 @@
 			<slot></slot>
 		</template>
 		<div v-if="judge" class="content">
-			<li>{{ props.msg }}</li>
+			{{ props.msg }}
 			<div class="decoration"></div>
 		</div>
 	</NPopover>

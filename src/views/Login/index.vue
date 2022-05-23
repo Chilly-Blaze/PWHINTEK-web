@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 20:46:09
- * @LastEditTime: 2022-05-22 22:42:01
+ * @LastEditTime: 2022-05-23 22:56:11
  * @FilePath: /front-end/src/views/Login/index.vue
  * @Description: 登录界面
 -->
@@ -22,23 +22,23 @@
 				<PEButton
 					class="front-hint-style"
 					@click="toggle(false)"
-					>去注册&gt</PEButton
+					>{{ loginMessages.static.toSignup }}&gt</PEButton
 				>
 				<PTInput
 					v-model="data.username"
 					:isCorrect="isUsername"
 					class="input-style"
-					msg="用户名"
+					:msg="loginMessages.static.username"
 				/>
 				<PPInput
 					v-model="data.password"
 					:isCorrect="isPassword"
 					class="input-style"
-					msg="密码"
+					:msg="loginMessages.static.password"
 				/>
-				<PCButton class="button-style" @click="login"
-					>PONG!</PCButton
-				>
+				<PCButton class="button-style" @click="login">{{
+					loginMessages.static.loginButton
+				}}</PCButton>
 			</div>
 			<div class="signup">
 				<div class="login-bgimg">
@@ -47,47 +47,47 @@
 				<PEButton
 					class="back-hint-style"
 					@click="toggle(true)"
-					>&lt去登录</PEButton
+					>&lt{{ loginMessages.static.toLogin }}</PEButton
 				>
 				<PPopover
 					placement="left-start"
 					:judge="!isNickname || false"
-					:msg="readonlyData.msg.nickname"
+					:msg="loginMessages.hint.nicknameRule"
 				>
 					<PTInput
 						v-model="data.nickname"
 						:isCorrect="isNickname"
 						class="input-style"
-						msg="昵称"
+						:msg="loginMessages.static.nickname"
 					/>
 				</PPopover>
 				<PPopover
 					placement="left"
 					:judge="!isUsername || false"
-					:msg="readonlyData.msg.username"
+					:msg="loginMessages.hint.usernameRule"
 				>
 					<PTInput
 						v-model="data.username"
 						:isCorrect="isUsername"
 						class="input-style"
-						msg="用户名"
+						:msg="loginMessages.static.username"
 					/>
 				</PPopover>
 				<PPopover
 					placement="left-end"
 					:judge="!isPassword || false"
-					:msg="readonlyData.msg.password"
+					:msg="loginMessages.hint.passwordRule"
 				>
 					<PPInput
 						v-model="data.password"
 						:isCorrect="isPassword"
 						class="input-style"
-						msg="密码"
+						:msg="loginMessages.static.password"
 					/>
 				</PPopover>
-				<PCButton class="button-style" @click="signup"
-					>PONG!</PCButton
-				>
+				<PCButton class="button-style" @click="signup">{{
+					loginMessages.static.signupButton
+				}}</PCButton>
 			</div>
 		</div>
 	</div>
@@ -108,7 +108,10 @@
 	import gsap from 'gsap'
 	import { rLogin, rSignup } from '@/api'
 	import { useMessage } from 'naive-ui'
+	import { loginMessages } from '@/lang/zh'
+	import { useRouter } from 'vue-router'
 	const message = useMessage()
+	const router = useRouter()
 
 	/**
 	 * data段
@@ -209,11 +212,15 @@
 		if (isUsername.value && isPassword.value) {
 			try {
 				await rLogin(data.username, data.password)
-				message.success('登录成功', PMessage)
+				message.success(
+					loginMessages.hint.loginSuccess,
+					PMessage,
+				)
+				router.push({ name: 'home' })
 			} catch (err: any) {
 				message.error(err, PMessage)
 			}
-		} else message.error('用户名或密码格式都输错了喵！', PMessage)
+		} else message.error(loginMessages.hint.loginError, PMessage)
 	}
 
 	/**
@@ -221,7 +228,6 @@
 	 * 注册
 	 */
 	async function signup() {
-		//TODO: 统一封装Message提示文字信息，包括登录等
 		if (
 			isNickname.value &&
 			isUsername.value &&
@@ -233,16 +239,15 @@
 					data.password,
 					data.nickname,
 				)
-				message.success('注册成功', PMessage)
+				message.success(
+					loginMessages.hint.signupSuccess,
+					PMessage,
+				)
 				toggle(true)
 			} catch (err: any) {
 				message.error(err, PMessage)
 			}
-		} else
-			message.error(
-				'能不能好好看看注册信息的提示文字呀baka！',
-				PMessage,
-			)
+		} else message.error(loginMessages.hint.signupError, PMessage)
 	}
 </script>
 
