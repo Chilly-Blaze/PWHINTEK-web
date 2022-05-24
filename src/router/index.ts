@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 12:59:27
- * @LastEditTime: 2022-05-24 18:23:26
+ * @LastEditTime: 2022-05-24 22:06:42
  * @FilePath: /front-end/src/router/index.ts
  * @Description: 路由配置+守卫
  */
@@ -10,14 +10,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 import pinia from '@/stores'
 import { useUserInfoStore } from '@/stores/userInfo'
 import 'vue-router'
-import { useOtherStore } from '../stores/other'
+import { loginMessages } from '@/lang/zh'
 declare module 'vue-router' {
 	interface RouteMeta {
 		permission: 'public' | 'user' | 'admin' | 'all'
 	}
 }
 const store = useUserInfoStore(pinia)
-const utilStore = useOtherStore(pinia)
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,7 +54,7 @@ router.beforeEach((to, from) => {
 	if (to.meta.permission === 'public' && store.info !== undefined)
 		return false
 	if (to.meta.permission === 'user' && store.info === undefined) {
-		utilStore.message?.info('还没登录呢!', PMessage)
+		PMessage.info(loginMessages.hint.notLoginError)
 		return { name: 'login', params: { redirect: to.fullPath } }
 	}
 })

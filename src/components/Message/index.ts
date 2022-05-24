@@ -1,16 +1,19 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-05-20 10:40:46
- * @LastEditTime: 2022-05-24 18:25:53
+ * @LastEditTime: 2022-05-24 21:50:49
  * @FilePath: /front-end/src/components/Message/index.ts
  * @Description: 自定义消息引用
  */
 import type { MessageOptions, MessageRenderMessage } from 'naive-ui'
 import { h } from 'vue'
 import PMessageVue from './Message.vue'
-import { useMessage } from 'naive-ui'
+import { useUtilStore } from '@/stores/util'
+import pinia from '@/stores'
 
-const Message: MessageRenderMessage = (props) => {
+const store = useUtilStore(pinia)
+
+const MessageRender: MessageRenderMessage = (props) => {
 	return h(
 		PMessageVue,
 		{
@@ -25,17 +28,19 @@ const Message: MessageRenderMessage = (props) => {
 	)
 }
 
-const PMessage: MessageOptions = {
-	render: Message,
+const PMessageOptions: MessageOptions = {
+	render: MessageRender,
 	duration: 5000,
 	closable: true,
 }
-// const message = useMessage()
-// const PMessage = {
-// 	info: (content:string) => message.info(content, PMessageOptions),
-// 	success: (content:string) => message.success(content, PMessageOptions),
-// 	warning: (content:string) => message.warning(content, PMessageOptions),
-// 	error: (content:string) => message.error(content, PMessageOptions),
-// }
-// TODO: 修改全局消息发送
+const PMessage = {
+	info: (content: string) =>
+		store.message!.info(content, PMessageOptions),
+	success: (content: string) =>
+		store.message!.success(content, PMessageOptions),
+	warning: (content: string) =>
+		store.message!.warning(content, PMessageOptions),
+	error: (content: string) =>
+		store.message!.error(content, PMessageOptions),
+}
 export { PMessage }

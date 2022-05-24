@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-05-23 18:18:06
- * @LastEditTime: 2022-05-23 19:26:58
+ * @LastEditTime: 2022-05-24 22:02:38
  * @FilePath: /front-end/src/lang/zh/index.ts
  * @Description: 中文界面信息
  */
@@ -23,6 +23,8 @@ const loginMessages = readonly({
 			'6位以上，可以使用中英文和或者一些不会引发奇怪反应的安全字符(._~!@#$^&*)~',
 		loginSuccess: '登录成功',
 		loginError: '用户名或密码格式输错了喵！',
+		notLoginError: '您还没有登录喵！',
+		logoutSuccess: '登出成功，さようなら~',
 		signupSuccess: '注册成功',
 		signupError: '能不能好好看看注册信息的提示要求呀baka！',
 	},

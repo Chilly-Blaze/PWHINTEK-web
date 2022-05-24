@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 20:46:09
- * @LastEditTime: 2022-05-24 18:00:41
+ * @LastEditTime: 2022-05-24 22:07:07
  * @FilePath: /front-end/src/views/Login/index.vue
  * @Description: 登录界面
 -->
@@ -107,11 +107,9 @@
 	import { reactive, ref, readonly, computed } from 'vue'
 	import gsap from 'gsap'
 	import { rLogin, rSignup } from '@/api'
-	import { useMessage } from 'naive-ui'
 	import { loginMessages } from '@/lang/zh'
 	import { useUserInfoStore } from '@/stores/userInfo'
 	import { useRoute, useRouter } from 'vue-router'
-	const message = useMessage()
 	const router = useRouter()
 	const route = useRoute()
 	const store = useUserInfoStore()
@@ -216,10 +214,7 @@
 			try {
 				await rLogin(data.username, data.password)
 				await store.updateInfo()
-				message.success(
-					loginMessages.hint.loginSuccess,
-					PMessage,
-				)
+				PMessage.success(loginMessages.hint.loginSuccess)
 				route.params.redirect
 					? router.push({
 							path: route.params.redirect as string,
@@ -227,10 +222,10 @@
 					  })
 					: router.push({ name: 'home', replace: true })
 			} catch (err: any) {
-				message.error(err, PMessage)
+				PMessage.error(err)
 				router.push({ name: 'home', replace: true })
 			}
-		} else message.error(loginMessages.hint.loginError, PMessage)
+		} else PMessage.error(loginMessages.hint.loginError)
 	}
 
 	/**
@@ -249,15 +244,12 @@
 					data.password,
 					data.nickname,
 				)
-				message.success(
-					loginMessages.hint.signupSuccess,
-					PMessage,
-				)
+				PMessage.success(loginMessages.hint.signupSuccess)
 				toggle(true)
 			} catch (err: any) {
-				message.error(err, PMessage)
+				PMessage.error(err)
 			}
-		} else message.error(loginMessages.hint.signupError, PMessage)
+		} else PMessage.error(loginMessages.hint.signupError)
 	}
 </script>
 

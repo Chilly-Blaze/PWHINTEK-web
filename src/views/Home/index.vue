@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-23 20:36:51
- * @LastEditTime: 2022-05-24 17:53:07
+ * @LastEditTime: 2022-05-24 22:04:09
  * @FilePath: /front-end/src/views/Home/index.vue
  * @Description: 个人界面
 -->
@@ -14,21 +14,19 @@
 <script setup lang="ts">
 	import { PMessage } from '@/components'
 	import { useUserInfoStore } from '@/stores/userInfo'
-	import { useMessage } from 'naive-ui'
 	import { ref } from 'vue'
 	import { useRouter } from 'vue-router'
-	const message = useMessage()
+	import { loginMessages } from '@/lang/zh'
 	let info = ref<UserInfo>()
 	const store = useUserInfoStore()
 	const router = useRouter()
 	async function logout() {
-		console.log(store.info)
 		try {
 			await store.clearInfo()
-			message.success('登出成功', PMessage)
+			PMessage.success(loginMessages.hint.logoutSuccess)
 			router.push({ name: 'public' })
 		} catch (err: any) {
-			message.error(err, PMessage)
+			PMessage.error(err)
 		}
 	}
 	function myInfo() {
