@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 20:46:09
- * @LastEditTime: 2022-05-23 22:56:11
+ * @LastEditTime: 2022-05-24 18:00:41
  * @FilePath: /front-end/src/views/Login/index.vue
  * @Description: 登录界面
 -->
@@ -109,9 +109,12 @@
 	import { rLogin, rSignup } from '@/api'
 	import { useMessage } from 'naive-ui'
 	import { loginMessages } from '@/lang/zh'
-	import { useRouter } from 'vue-router'
+	import { useUserInfoStore } from '@/stores/userInfo'
+	import { useRoute, useRouter } from 'vue-router'
 	const message = useMessage()
 	const router = useRouter()
+	const route = useRoute()
+	const store = useUserInfoStore()
 
 	/**
 	 * data段
@@ -212,13 +215,20 @@
 		if (isUsername.value && isPassword.value) {
 			try {
 				await rLogin(data.username, data.password)
+				await store.updateInfo()
 				message.success(
 					loginMessages.hint.loginSuccess,
 					PMessage,
 				)
-				router.push({ name: 'home' })
+				route.params.redirect
+					? router.push({
+							path: route.params.redirect as string,
+							replace: true,
+					  })
+					: router.push({ name: 'home', replace: true })
 			} catch (err: any) {
 				message.error(err, PMessage)
+				router.push({ name: 'home', replace: true })
 			}
 		} else message.error(loginMessages.hint.loginError, PMessage)
 	}

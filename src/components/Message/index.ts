@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-05-20 10:40:46
- * @LastEditTime: 2022-05-23 22:18:56
+ * @LastEditTime: 2022-05-24 18:25:53
  * @FilePath: /front-end/src/components/Message/index.ts
  * @Description: 自定义消息引用
  */
@@ -37,4 +37,5 @@ const PMessage: MessageOptions = {
 // 	warning: (content:string) => message.warning(content, PMessageOptions),
 // 	error: (content:string) => message.error(content, PMessageOptions),
 // }
+// TODO: 修改全局消息发送
 export { PMessage }

@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 12:59:27
- * @LastEditTime: 2022-05-23 22:47:28
+ * @LastEditTime: 2022-05-24 18:20:15
  * @FilePath: /front-end/src/stores/userInfo.ts
  * @Description: 用户信息全局存储
  */
@@ -9,21 +9,19 @@ import { defineStore } from 'pinia'
 import { rMyInfo, rLogout } from '../api/index'
 
 export const useUserInfoStore = defineStore({
-	id: 'counter',
+	id: 'userInfo',
 	state: () => ({
-		info: undefined,
+		info: undefined as UserInfo | undefined,
 	}),
 	actions: {
-		async getInfo() {
-			if (this.info === undefined) {
-				try {
-					const resp = await rMyInfo()
-					this.info = resp.data.data
-					return Promise.resolve(this.info)
-				} catch (err: any) {
-					return Promise.reject(err)
-				}
-			} else return Promise.resolve(this.info)
+		async updateInfo() {
+			try {
+				const resp = await rMyInfo()
+				this.info = resp.data.data
+				return Promise.resolve()
+			} catch (err: any) {
+				return Promise.reject(err)
+			}
 		},
 		async clearInfo() {
 			try {

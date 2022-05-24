@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-23 20:36:51
- * @LastEditTime: 2022-05-23 23:02:23
+ * @LastEditTime: 2022-05-24 17:53:07
  * @FilePath: /front-end/src/views/Home/index.vue
  * @Description: 个人界面
 -->
@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-	import { rLogout, rMyInfo } from '@/api'
 	import { PMessage } from '@/components'
 	import { useUserInfoStore } from '@/stores/userInfo'
 	import { useMessage } from 'naive-ui'
@@ -27,17 +26,13 @@
 		try {
 			await store.clearInfo()
 			message.success('登出成功', PMessage)
-			router.push('/')
+			router.push({ name: 'public' })
 		} catch (err: any) {
 			message.error(err, PMessage)
 		}
 	}
-	async function myInfo() {
-		try {
-			info.value = await store.getInfo()
-		} catch (err: any) {
-			message.error(err, PMessage)
-		}
+	function myInfo() {
+		info.value = store.info
 	}
 </script>
 
