@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 12:59:27
- * @LastEditTime: 2022-05-24 22:06:42
+ * @LastEditTime: 2022-05-25 17:05:18
  * @FilePath: /front-end/src/router/index.ts
  * @Description: 路由配置+守卫
  */
@@ -25,7 +25,7 @@ const router = createRouter({
 			path: '/',
 			name: 'main',
 			component: PLayout,
-			redirect: 'home',
+			// redirect: 'welcome',
 			children: [
 				{
 					path: 'home',
@@ -48,14 +48,29 @@ const router = createRouter({
 			component: () => import('@/views/Login/index.vue'),
 			meta: { permission: 'public' },
 		},
+		{
+			path: '/welcome',
+			name: 'welcome',
+			component: () => import('@/views/Welcome/index.vue'),
+			meta: { permission: 'all' },
+		},
 	],
 })
-router.beforeEach((to, from) => {
-	if (to.meta.permission === 'public' && store.info !== undefined)
-		return false
-	if (to.meta.permission === 'user' && store.info === undefined) {
-		PMessage.info(loginMessages.hint.notLoginError)
-		return { name: 'login', params: { redirect: to.fullPath } }
+router.beforeEach(async (to, from) => {
+	// @ts-ignore
+	try {
+		await store.updateInfo()
+		if (to.meta.permission === 'public') return false
+		if (from.name === 'welcome' && to.name === 'public')
+			return { name: 'home' }
+	} catch (error) {
+		if (to.meta.permission === 'user') {
+			PMessage.info(loginMessages.hint.notLoginError)
+			return {
+				name: 'login',
+				params: { redirect: to.fullPath },
+			}
+		}
 	}
 })
 

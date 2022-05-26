@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 20:46:09
- * @LastEditTime: 2022-05-24 22:07:07
+ * @LastEditTime: 2022-05-26 20:24:03
  * @FilePath: /front-end/src/views/Login/index.vue
  * @Description: 登录界面
 -->
@@ -28,12 +28,14 @@
 					v-model="data.username"
 					:isCorrect="isUsername"
 					class="input-style"
+					@keydown.enter="login"
 					:msg="loginMessages.static.username"
 				/>
 				<PPInput
 					v-model="data.password"
 					:isCorrect="isPassword"
 					class="input-style"
+					@keydown.enter="login"
 					:msg="loginMessages.static.password"
 				/>
 				<PCButton class="button-style" @click="login">{{
@@ -59,6 +61,7 @@
 						:isCorrect="isNickname"
 						class="input-style"
 						:msg="loginMessages.static.nickname"
+						@keydown.enter="signup"
 					/>
 				</PPopover>
 				<PPopover
@@ -71,6 +74,7 @@
 						:isCorrect="isUsername"
 						class="input-style"
 						:msg="loginMessages.static.username"
+						@keydown.enter="signup"
 					/>
 				</PPopover>
 				<PPopover
@@ -83,6 +87,7 @@
 						:isCorrect="isPassword"
 						class="input-style"
 						:msg="loginMessages.static.password"
+						@keydown.enter="signup"
 					/>
 				</PPopover>
 				<PCButton class="button-style" @click="signup">{{
@@ -113,6 +118,8 @@
 	const router = useRouter()
 	const route = useRoute()
 	const store = useUserInfoStore()
+
+	// TODO: 加一个刚进入的时候的浮现动画
 
 	/**
 	 * data段
@@ -300,6 +307,7 @@
 				transform-style: preserve-3d;
 				.input-style {
 					transform: translateZ(50px);
+					width: 90%;
 				}
 				.button-style {
 					transform: translateZ(30px);

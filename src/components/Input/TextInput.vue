@@ -1,15 +1,13 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-03 19:29:39
- * @LastEditTime: 2022-05-22 13:37:32
+ * @LastEditTime: 2022-05-26 20:43:51
  * @FilePath: /front-end/src/components/Input/TextInput.vue
  * @Description: 文本输入组件，子组件InputTamplate通过插槽集成整体清除动画
 -->
 
 <template>
 	<PInputTemp
-		:width="props.width"
-		:height="props.height"
 		:isCorrect="props.isCorrect"
 		:msg="props.msg"
 		ref="msg"
@@ -35,7 +33,7 @@
 
 <script setup lang="ts">
 	import { PInputTemp } from '..'
-	import { ref, reactive, computed, watch, readonly } from 'vue'
+	import { ref, reactive, computed, watch, onMounted } from 'vue'
 	import gsap from 'gsap'
 
 	// 变量准备部分
@@ -45,15 +43,11 @@
 	 */
 	const props = withDefaults(
 		defineProps<{
-			width: number
-			height: number
 			msg: string
 			isCorrect: boolean
 			modelValue?: string
 		}>(),
 		{
-			width: 240,
-			height: 48,
 			isCorrect: true,
 			msg: 'placeholder',
 		},
@@ -111,11 +105,11 @@
 	 * readonly段
 	 * 计算单次常量，用于描述动画过程
 	 */
-	const rData = readonly({
+	const rData = computed(() => ({
 		// 清除结束位置定位
-		inputWidthBefore: -props.width + props.height + 5 + 'px',
-		inputWidthLine: -props.width + props.height / 2 + 17 + 'px',
-	})
+		inputWidthBefore: -rawD.width + rawD.height + 5 + 'px',
+		inputWidthLine: -rawD.width + rawD.height / 2 + 17 + 'px',
+	}))
 
 	/**
 	 * data段
@@ -127,7 +121,20 @@
 		y1: 10,
 		x2: 14,
 		y2: 14,
+		width: 0,
+		height: 0,
 	})
+	watch(
+		[
+			() => msg.value?.input.offsetWidth,
+			() => msg.value?.input.offsetHeight,
+		],
+		(v) => {
+			rawD.width = v[0] || 0
+			rawD.height = v[1] || 0
+			console.log(v)
+		},
+	)
 	/**
 	 * computed段
 	 * 计算SVG路径
@@ -176,7 +183,7 @@
 		let tl = gsap.timeline()
 		// 输入框失焦, 定位初始长度
 		tl.set(elem, {
-			'--clear-swipe-left': rData.inputWidthBefore,
+			'--clear-swipe-left': rData.value.inputWidthBefore,
 			onStart() {
 				msg.value!.input.blur()
 			},
@@ -220,7 +227,7 @@
 			// 整体移动
 			.to(elem, {
 				'--clear-swipe-x': 1,
-				'--clear-x': rData.inputWidthLine,
+				'--clear-x': rData.value.inputWidthLine,
 				duration: 0.45,
 			})
 			// 箭头消失
@@ -355,8 +362,8 @@
 			position: relative;
 			z-index: 1;
 			// 自身属性
-			width: calc(var(--height) - 24px);
-			height: calc(var(--height) - 24px);
+			width: calc(v-bind('rawD.height+"px"') - 24px);
+			height: calc(v-bind('rawD.height+"px"') - 24px);
 			// 修饰属性
 			outline: none;
 			cursor: pointer;

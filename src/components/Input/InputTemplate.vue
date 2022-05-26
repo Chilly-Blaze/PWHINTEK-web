@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-27 21:32:13
- * @LastEditTime: 2022-05-22 19:58:09
+ * @LastEditTime: 2022-05-26 20:28:33
  * @FilePath: /front-end/src/components/Input/InputTemplate.vue
  * @Description: 通用化输入框组件，返回输入值
 -->
@@ -18,7 +18,7 @@
 				ref="line"
 				x1="1"
 				y1="5"
-				:x2="props.width + 'px'"
+				:x2="input?.offsetWidth || '0'"
 				y2="5"
 			/>
 		</svg>
@@ -28,15 +28,13 @@
 
 <script setup lang="ts">
 	// 前置导入
-	import { reactive, watch, ref } from 'vue'
+	import { reactive, watch, ref, onMounted } from 'vue'
 	import gsap from 'gsap'
 
 	interface Props {
 		// placeholder内容
 		msg: string
 		// 输入框长宽
-		width: number
-		height: number
 		// 输入内容是否正确
 		isCorrect: boolean
 		modelValue?: string
@@ -82,8 +80,11 @@
 			let bool = newValue!.length > 0
 			let lineLength = bool ? (newValue!.length * 10) / 2 : 10
 			lineLength =
-				lineLength > props.width - props.height * 2
-					? props.width - props.height * 2
+				lineLength >
+				input.value!.offsetWidth -
+					input.value!.offsetHeight * 2
+					? input.value!.offsetWidth -
+					  input.value!.offsetHeight * 2
 					: lineLength
 			let dasharray = lineLength + ' 10000'
 			gsap.to(line.value!, {
@@ -114,11 +115,6 @@
 	.input {
 		@include pagePara;
 		// 输入框长宽
-		--height: v-bind('props.height + "px"');
-		--width: v-bind('props.width + "px"');
-
-		height: var(--height);
-		width: var(--width);
 		display: flex;
 		position: relative;
 		overflow: hidden;
@@ -170,7 +166,7 @@
 			left: 20px;
 			z-index: 1;
 			// 自身属性
-			width: v-bind('props.width + "px"');
+			width: v-bind('input?.offsetWidth + "px" || "0px"');
 			height: 10px;
 
 			// 初始化提示线

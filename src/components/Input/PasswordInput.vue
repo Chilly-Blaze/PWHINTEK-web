@@ -54,15 +54,11 @@
 	 */
 	const props = withDefaults(
 		defineProps<{
-			width: number
-			height: number
 			msg: string
 			isCorrect: boolean
 			modelValue?: string
 		}>(),
 		{
-			width: 240,
-			height: 48,
 			isCorrect: true,
 			msg: 'Password',
 		},
@@ -102,40 +98,46 @@
 
 	/**
 	 * data段
-	 * 5.5表示上半弧，15.5表示下半弧
-	 */
-	const rawD = ref(5.5)
-	/**
-	 * computed段
-	 * 计算d
-	 */
-	const d = computed(() => {
-		return `M2 10.5C2 10.5 6.43686 ${rawD.value} 10.5 ${rawD.value}C14.5631 ${rawD.value} 19 10.5 19 10.5`
-	})
-
-	/**
-	 * readonly段
-	 * 一些计算参数
-	 */
-	const rawData = readonly({
-		inputWidthBefore: -props.width + props.height + 5 + 'px',
-		inputWidth: props.width - props.height,
-		maxXOffset: (props.height - 24) / 16,
-		halfSVG: props.height / 2,
-	})
-
-	interface exposeData {
-		input: HTMLInputElement
-	}
-	/**
-	 * data段
 	 * 接收子组件的input dom用于聚焦和失焦
 	 * 默认undefined，子组件加载完成之后会被赋值
 	 */
 	let msg = ref<exposeData>()
 	onMounted(() => {
 		msg.value!.input.type = 'password'
+		rawD.width = msg.value?.input.offsetWidth || 0
+		rawD.height = msg.value?.input.offsetHeight || 0
 	})
+	/**
+	 * data段
+	 * 5.5表示上半弧，15.5表示下半弧
+	 */
+	const rawD = reactive({
+		d: 5.5,
+		width: 0,
+		height: 0,
+	})
+	/**
+	 * computed段
+	 * 计算d
+	 */
+	const d = computed(() => {
+		return `M2 10.5C2 10.5 6.43686 ${rawD.d} 10.5 ${rawD.d}C14.5631 ${rawD.d} 19 10.5 19 10.5`
+	})
+
+	/**
+	 * readonly段
+	 * 一些计算参数
+	 */
+	const rawData = computed(() => ({
+		inputWidthBefore: -rawD.width + rawD.height + 5 + 'px',
+		inputWidth: rawD.width - rawD.height,
+		maxXOffset: (rawD.height - 24) / 16,
+		halfSVG: rawD.height / 2,
+	}))
+
+	interface exposeData {
+		input: HTMLInputElement
+	}
 
 	/**
 	 * methods段
@@ -145,16 +147,17 @@
 		let node = e.target as HTMLElement
 		if (node.nodeName === 'INPUT') {
 			eyeLocation.x =
-				e.offsetX / rawData.inputWidth -
+				e.offsetX / rawData.value.inputWidth -
 				1 -
-				rawData.maxXOffset
+				rawData.value.maxXOffset
 		} else if (node.nodeName === 'BUTTON') {
 			eyeLocation.x =
-				(e.offsetX / rawData.halfSVG - 1) * rawData.maxXOffset
+				(e.offsetX / rawData.value.halfSVG - 1) *
+				rawData.value.maxXOffset
 		}
 		eyeLocation.y =
-			(1 - e.offsetY / rawData.halfSVG) *
-			rawData.maxXOffset *
+			(1 - e.offsetY / rawData.value.halfSVG) *
+			rawData.value.maxXOffset *
 			(Math.abs(eyeLocation.x) / 3 - 1)
 	}
 	/**
@@ -182,7 +185,7 @@
 				.to(
 					rawD,
 					{
-						value: 15.5,
+						d: 15.5,
 						duration: 0.5,
 					},
 					'-=0.08',
@@ -217,7 +220,7 @@
 				.to(
 					rawD,
 					{
-						value: 5.5,
+						d: 5.5,
 						duration: 0.5,
 						onComplete() {
 							msg.value!.input.type = 'password'
@@ -263,6 +266,7 @@
 		--eye-y: 0;
 		--eye-x: 0;
 		--eye-s: 1;
+		--height: v-bind('rawD.height+"px"');
 		-webkit-appearance: none;
 		outline: none;
 		background: none;

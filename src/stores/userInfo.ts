@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 12:59:27
- * @LastEditTime: 2022-05-24 18:20:15
+ * @LastEditTime: 2022-05-25 14:55:54
  * @FilePath: /front-end/src/stores/userInfo.ts
  * @Description: 用户信息全局存储
  */
@@ -17,7 +17,7 @@ export const useUserInfoStore = defineStore({
 		async updateInfo() {
 			try {
 				const resp = await rMyInfo()
-				this.info = resp.data.data
+				this.info = resp.data.data || this.info
 				return Promise.resolve()
 			} catch (err: any) {
 				return Promise.reject(err)
