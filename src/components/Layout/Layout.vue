@@ -1,15 +1,14 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-23 20:38:11
- * @LastEditTime: 2022-05-25 19:23:56
+ * @LastEditTime: 2022-05-26 20:52:18
  * @FilePath: /front-end/src/components/Layout/Layout.vue
  * @Description: 主界面统一布局
 -->
 <template>
-	<RouterView />
 	<div class="main">
 		<div class="bg-layer"><Logo /></div>
-		<div class="content"><h1>你好世界</h1></div>
+		<div class="content"><RouterView /></div>
 	</div>
 </template>
 

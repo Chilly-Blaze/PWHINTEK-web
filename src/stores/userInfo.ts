@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 12:59:27
- * @LastEditTime: 2022-05-25 14:55:54
+ * @LastEditTime: 2022-06-01 14:59:55
  * @FilePath: /front-end/src/stores/userInfo.ts
  * @Description: 用户信息全局存储
  */
@@ -12,9 +12,11 @@ export const useUserInfoStore = defineStore({
 	id: 'userInfo',
 	state: () => ({
 		info: undefined as UserInfo | undefined,
+		flag: false,
 	}),
 	actions: {
 		async updateInfo() {
+			this.flag = true
 			try {
 				const resp = await rMyInfo()
 				this.info = resp.data.data || this.info

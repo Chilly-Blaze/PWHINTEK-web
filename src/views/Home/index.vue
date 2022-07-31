@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-23 20:36:51
- * @LastEditTime: 2022-05-24 22:04:09
+ * @LastEditTime: 2022-06-16 19:30:09
  * @FilePath: /front-end/src/views/Home/index.vue
  * @Description: 个人界面
 -->
@@ -9,6 +9,7 @@
 	<button @click="logout">登出</button>
 	<button @click="myInfo">查询个人信息</button>
 	<p>{{ info }}</p>
+	<button @click="myArticle">个人文章</button>
 </template>
 
 <script setup lang="ts">
@@ -17,6 +18,7 @@
 	import { ref } from 'vue'
 	import { useRouter } from 'vue-router'
 	import { loginMessages } from '@/lang/zh'
+	import { rMyArticle, reqTest } from '../../api/index'
 	let info = ref<UserInfo>()
 	const store = useUserInfoStore()
 	const router = useRouter()
@@ -31,6 +33,12 @@
 	}
 	function myInfo() {
 		info.value = store.info
+	}
+	async function myArticle() {
+		try {
+			const result = await rMyArticle(1)
+			const pageList = result.data
+		} catch (err: any) {}
 	}
 </script>
 

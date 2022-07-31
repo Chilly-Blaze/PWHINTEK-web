@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 12:59:27
- * @LastEditTime: 2022-05-25 17:05:18
+ * @LastEditTime: 2022-06-01 15:00:22
  * @FilePath: /front-end/src/router/index.ts
  * @Description: 路由配置+守卫
  */
@@ -25,7 +25,7 @@ const router = createRouter({
 			path: '/',
 			name: 'main',
 			component: PLayout,
-			// redirect: 'welcome',
+			redirect: 'welcome',
 			children: [
 				{
 					path: 'home',
@@ -57,18 +57,21 @@ const router = createRouter({
 	],
 })
 router.beforeEach(async (to, from) => {
-	// @ts-ignore
 	try {
-		await store.updateInfo()
-		if (to.meta.permission === 'public') return false
-		if (from.name === 'welcome' && to.name === 'public')
-			return { name: 'home' }
+		if (store.flag === false) await store.updateInfo()
 	} catch (error) {
-		if (to.meta.permission === 'user') {
-			PMessage.info(loginMessages.hint.notLoginError)
-			return {
-				name: 'login',
-				params: { redirect: to.fullPath },
+	} finally {
+		if (store.info !== undefined) {
+			if (to.meta.permission === 'public') return false
+			if (from.name === 'welcome' && to.name === 'public')
+				return { name: 'home' }
+		} else {
+			if (to.meta.permission === 'user') {
+				PMessage.info(loginMessages.hint.notLoginError)
+				return {
+					name: 'login',
+					params: { redirect: to.fullPath },
+				}
 			}
 		}
 	}

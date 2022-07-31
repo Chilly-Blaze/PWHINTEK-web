@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 18:59:32
- * @LastEditTime: 2022-05-23 22:35:00
+ * @LastEditTime: 2022-06-09 21:33:47
  * @FilePath: /front-end/src/api/index.ts
  * @Description:统一api封装
  */
@@ -24,3 +24,6 @@ export const rSignup = (
 	})
 export const rLogout = () => service.post<Result>('user/logout')
 export const rMyInfo = () => service.get<Result>('user/my_info')
+
+export const rMyArticle = (page: number) =>
+	service.get<Result>(`article/my/${page}`)

@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-03 19:29:39
- * @LastEditTime: 2022-05-26 20:43:51
+ * @LastEditTime: 2022-05-26 21:20:03
  * @FilePath: /front-end/src/components/Input/TextInput.vue
  * @Description: 文本输入组件，子组件InputTamplate通过插槽集成整体清除动画
 -->
@@ -132,7 +132,6 @@
 		(v) => {
 			rawD.width = v[0] || 0
 			rawD.height = v[1] || 0
-			console.log(v)
 		},
 	)
 	/**
