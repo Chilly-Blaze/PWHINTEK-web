@@ -1,11 +1,12 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 14:12:27
- * @LastEditTime: 2022-05-23 21:50:09
+ * @LastEditTime: 2022-08-02 18:07:42
  * @FilePath: /front-end/src/utils/request.ts
  * @Description: Axios配置
  */
 import axios from 'axios'
+import { PMessage } from '@/components'
 
 const service = axios.create({
 	baseURL: '/api',
@@ -27,7 +28,8 @@ service.interceptors.response.use(
 		const res: Result = resp.data
 		if (res.ok) return resp
 		else {
-			return Promise.reject(res.failMsg)
+			PMessage.error(res.failMsg)
+			return Promise.reject()
 		}
 	},
 	(err) => {

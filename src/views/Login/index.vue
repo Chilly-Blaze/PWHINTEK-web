@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 20:46:09
- * @LastEditTime: 2022-05-26 20:24:03
+ * @LastEditTime: 2022-08-02 18:08:17
  * @FilePath: /front-end/src/views/Login/index.vue
  * @Description: 登录界面
 -->
@@ -19,9 +19,7 @@
 				<div class="login-bgimg">
 					<img src="/img/login_pic.png" />
 				</div>
-				<PEButton
-					class="front-hint-style"
-					@click="toggle(false)"
+				<PEButton class="front-hint-style" @click="toggle(false)"
 					>{{ loginMessages.static.toSignup }}&gt</PEButton
 				>
 				<PTInput
@@ -46,9 +44,7 @@
 				<div class="login-bgimg">
 					<img src="/img/login_pic.png" />
 				</div>
-				<PEButton
-					class="back-hint-style"
-					@click="toggle(true)"
+				<PEButton class="back-hint-style" @click="toggle(true)"
 					>&lt{{ loginMessages.static.toLogin }}</PEButton
 				>
 				<PPopover
@@ -228,10 +224,7 @@
 							replace: true,
 					  })
 					: router.push({ name: 'home', replace: true })
-			} catch (err: any) {
-				PMessage.error(err)
-				router.push({ name: 'home', replace: true })
-			}
+			} catch (err: any) {}
 		} else PMessage.error(loginMessages.hint.loginError)
 	}
 
@@ -240,22 +233,12 @@
 	 * 注册
 	 */
 	async function signup() {
-		if (
-			isNickname.value &&
-			isUsername.value &&
-			isPassword.value
-		) {
+		if (isNickname.value && isUsername.value && isPassword.value) {
 			try {
-				await rSignup(
-					data.username,
-					data.password,
-					data.nickname,
-				)
+				await rSignup(data.username, data.password, data.nickname)
 				PMessage.success(loginMessages.hint.signupSuccess)
 				toggle(true)
-			} catch (err: any) {
-				PMessage.error(err)
-			}
+			} catch (err: any) {}
 		} else PMessage.error(loginMessages.hint.signupError)
 	}
 </script>
@@ -331,9 +314,7 @@
 					width: 100%;
 					overflow: hidden;
 					img {
-						transform: translateX(
-							var(--transform-random)
-						);
+						transform: translateX(var(--transform-random));
 						height: 100%;
 					}
 				}
