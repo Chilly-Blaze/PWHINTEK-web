@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-23 20:38:11
- * @LastEditTime: 2022-05-26 20:52:18
+ * @LastEditTime: 2022-08-30 11:17:56
  * @FilePath: /front-end/src/components/Layout/Layout.vue
  * @Description: 主界面统一布局
 -->
@@ -35,7 +35,6 @@
 	.content {
 		position: absolute;
 		display: grid;
-		background-color: aqua;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);

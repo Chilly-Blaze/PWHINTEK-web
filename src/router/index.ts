@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 12:59:27
- * @LastEditTime: 2022-07-31 10:22:22
+ * @LastEditTime: 2022-08-30 11:02:00
  * @FilePath: /front-end/src/router/index.ts
  * @Description: 路由配置+守卫
  */
@@ -39,6 +39,12 @@ const router = createRouter({
 					component: () => import('@/views/Public/index.vue'),
 					meta: { permission: 'all' },
 				},
+				{
+					path: '/test',
+					name: 'test',
+					component: () => import('@/components/Test.vue'),
+					meta: { permission: 'all' },
+				},
 			],
 		},
 		{
@@ -51,12 +57,6 @@ const router = createRouter({
 			path: '/welcome',
 			name: 'welcome',
 			component: () => import('@/views/Welcome/index.vue'),
-			meta: { permission: 'all' },
-		},
-		{
-			path: '/test',
-			name: 'test',
-			component: () => import('@/components/Test.vue'),
 			meta: { permission: 'all' },
 		},
 	],

@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 12:59:27
- * @LastEditTime: 2022-06-01 14:59:55
+ * @LastEditTime: 2022-08-30 19:32:51
  * @FilePath: /front-end/src/stores/userInfo.ts
  * @Description: 用户信息全局存储
  */

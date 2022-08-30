@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-08-01 11:46:55
- * @LastEditTime: 2022-08-10 12:47:55
+ * @LastEditTime: 2022-08-30 15:37:26
  * @FilePath: /front-end/src/components/Card/Telescopic.vue
  * @Description: 伸缩卡片
  * Copyright (c) 2022 by ChillyBlaze l135163642@gmail.com, All Rights Reserved. 
@@ -93,7 +93,7 @@
 			// 显示属性
 			position: absolute;
 			height: 10px;
-			top: v-bind('title?.offsetHeight + 18 + "px" || "0px"');
+			top: v-bind('(title?.offsetHeight||-18) + 18 + "px"');
 			width: v-bind('title?.offsetWidth + "px" || "0px"');
 			z-index: 1;
 			line {
