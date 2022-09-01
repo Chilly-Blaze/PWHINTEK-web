@@ -12,12 +12,7 @@
 		<template #feature>
 			<button ref="clear" class="clear" @click="switchType">
 				<svg viewBox="0 0 21 21">
-					<circle
-						class="eye"
-						cx="10.5"
-						cy="10.5"
-						r="2.25"
-					/>
+					<circle class="eye" cx="10.5" cy="10.5" r="2.25" />
 					<path class="top" :d="d" />
 					<path
 						class="bottom"
@@ -37,15 +32,8 @@
 </template>
 
 <script setup lang="ts">
-	import { PInputTemp } from '..'
-	import {
-		reactive,
-		watch,
-		computed,
-		ref,
-		readonly,
-		onMounted,
-	} from 'vue'
+	import PInputTemp from './Template.vue'
+	import { reactive, watch, computed, ref, readonly, onMounted } from 'vue'
 	import gsap from 'gsap'
 
 	/**

@@ -1,31 +1,31 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-08-15 22:51:08
- * @LastEditTime: 2022-08-30 21:32:36
+ * @LastEditTime: 2022-08-31 22:04:50
  * @FilePath: /front-end/src/components/Card/PictureClip.vue
  * @Description: 图片裁切卡片
  * Copyright (c) 2022 by ChillyBlaze l135163642@gmail.com, All Rights Reserved. 
 -->
 <template>
-	<div class="bgfilter">
-		<div class="main">
-			<div class="constituency">
-				<VueCropper
-					ref="cropper"
-					:img="props.src"
-					:autoCrop="true"
-					:fixed="true"
-					:centerBox="true"
-					@realTime="preview"
-				></VueCropper>
+	<teleport to="body">
+		<div class="bgfilter">
+			<div class="clip-card">
+				<div class="constituency">
+					<VueCropper
+						ref="cropper"
+						:img="props.src"
+						:autoCrop="true"
+						:fixed="true"
+						:centerBox="true"
+						@realTime="preview"
+					></VueCropper>
+				</div>
+				<img alt="avatar" ref="img" class="preview" />
+				<PCButton class="confirm" @click="confirm">确认</PCButton>
+				<PCButton class="quit" @click="emits('done')">退出</PCButton>
 			</div>
-			<div class="preview">
-				<img alt="avatar" ref="img" />
-			</div>
-			<PCButton class="confirm" @click="confirm">确认</PCButton>
-			<PCButton class="quit" @click="quit">退出</PCButton>
 		</div>
-	</div>
+	</teleport>
 </template>
 
 <script setup lang="ts">
@@ -33,7 +33,9 @@
 	import { VueCropper } from 'vue-cropper'
 	import { PCButton } from '..'
 	import { onMounted, reactive, ref } from 'vue'
-	const emits = defineEmits(['bytes', 'close'])
+	// 确认按钮返回formdata并触发data事件，完成后触发退出事件
+	const emits = defineEmits(['data', 'done'])
+	// 接收本地图片路径src
 	const props = defineProps<{
 		src: string
 	}>()
@@ -45,13 +47,12 @@
 		})
 	}
 	const confirm = () => {
-		cropper.value.getCropBlob((data: Blob) => {
-			emits('bytes', data)
-			emits('close')
+		cropper.value.getCropBlob((blob: Blob) => {
+			const formData = new FormData()
+			formData.append('file', blob)
+			emits('data', formData)
+			emits('done')
 		})
-	}
-	const quit = () => {
-		emits('close')
 	}
 </script>
 
@@ -65,7 +66,9 @@
 		align-items: center;
 		justify-content: center;
 		backdrop-filter: blur(8px);
-		.main {
+		.clip-card {
+			max-width: 90%;
+			max-height: 90%;
 			box-shadow: var(--component-thick-shadow);
 			background-color: var(--component-background-color);
 			border-radius: 3px;
@@ -87,13 +90,8 @@
 				grid-area: b;
 				width: 200px;
 				height: 200px;
-				border: solid black 1px;
 				border-radius: 100%;
 				overflow: hidden;
-				img {
-					width: 100%;
-					height: 100%;
-				}
 			}
 			.confirm {
 				grid-area: c;

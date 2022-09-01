@@ -1,8 +1,8 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-03 19:29:39
- * @LastEditTime: 2022-05-26 21:20:03
- * @FilePath: /front-end/src/components/Input/TextInput.vue
+ * @LastEditTime: 2022-09-01 11:17:33
+ * @FilePath: /front-end/src/components/Input/Text.vue
  * @Description: 文本输入组件，子组件InputTamplate通过插槽集成整体清除动画
 -->
 
@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-	import { PInputTemp } from '..'
+	import PInputTemp from './Template.vue'
 	import { ref, reactive, computed, watch, onMounted } from 'vue'
 	import gsap from 'gsap'
 
@@ -318,8 +318,7 @@
 		opacity: var(--clear-opacity);
 		transform: scale(var(--hover-scale, var(--clear-scale)));
 		// 分别过渡
-		transition: transform 0.3s
-				cubic-bezier(0.12, 0.76, 0.71, 1.38),
+		transition: transform 0.3s cubic-bezier(0.12, 0.76, 0.71, 1.38),
 			opacity 0.3s cubic-bezier(0.12, 0.76, 0.71, 1.38),
 			background-color 0.3s;
 
@@ -371,16 +370,13 @@
 			stroke-width: 1.5;
 			stroke-linecap: round;
 			stroke-linejoin: round;
-			transform: translateX(var(--clear-x))
-				rotate(var(--clear-rotate)) translateZ(0);
+			transform: translateX(var(--clear-x)) rotate(var(--clear-rotate))
+				translateZ(0);
 			// 单独属性
 			path {
 				transition: stroke 0.3s;
 				&.arrow {
-					stroke: var(
-						--clear-arrow-stroke,
-						var(--font-color)
-					);
+					stroke: var(--clear-arrow-stroke, var(--font-color));
 					stroke-dasharray: 4px;
 					stroke-dashoffset: var(--clear-arrow-offset);
 					opacity: var(--clear-arrow-o);
@@ -391,26 +387,18 @@
 						translateZ(0);
 
 					&:last-child {
-						stroke-dashoffset: var(
-							--clear-arrow-offset-second
-						);
+						stroke-dashoffset: var(--clear-arrow-offset-second);
 					}
 				}
 
 				&.line {
-					stroke: var(
-						--hover-line-stroke,
-						var(--font-color)
-					);
+					stroke: var(--hover-line-stroke, var(--font-color));
 					stroke-dasharray: var(--clear-line-array) 28.5px;
 					stroke-dashoffset: var(--clear-line-offset);
 				}
 
 				&.long {
-					stroke: var(
-						--clear-arrow-stroke,
-						var(--font-color)
-					);
+					stroke: var(--clear-arrow-stroke, var(--font-color));
 					stroke-dasharray: var(--clear-long-array) 15.5px;
 					stroke-dashoffset: var(--clear-long-offset);
 					opacity: var(--clear-arrow-o);

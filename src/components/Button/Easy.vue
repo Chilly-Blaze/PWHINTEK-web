@@ -1,8 +1,8 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-15 16:44:57
- * @LastEditTime: 2022-05-23 20:07:02
- * @FilePath: /front-end/src/components/Button/EasyButton.vue
+ * @LastEditTime: 2022-08-31 22:57:08
+ * @FilePath: /front-end/src/components/Button/Easy.vue
  * @Description: 较为平庸的按钮
 -->
 
@@ -24,11 +24,11 @@
 		cursor: pointer;
 		&:hover {
 			color: var(--font-hover-color);
-			font-size: calc(var(--common-font-size) * 1.1);
+			scale: 1.1;
 			transition: 0.1s ease-in-out;
 		}
 		&:active {
-			font-size: calc(var(--common-font-size) * 0.9);
+			scale: 0.9;
 			transition: 0.1s ease-in-out;
 		}
 	}

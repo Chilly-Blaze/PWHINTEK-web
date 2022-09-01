@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-23 20:38:11
- * @LastEditTime: 2022-08-30 11:17:56
+ * @LastEditTime: 2022-09-01 11:00:25
  * @FilePath: /front-end/src/components/Layout/Layout.vue
  * @Description: 主界面统一布局
 -->
@@ -21,7 +21,8 @@
 	.bg-layer {
 		position: fixed;
 		display: flex;
-		width: 100%;
+		align-items: center;
+		justify-content: center;
 		max-width: 800px;
 		left: 0;
 		right: 0;
@@ -30,7 +31,7 @@
 		margin: auto;
 		background-color: red;
 		opacity: 0.5;
-		z-index: -1;
+		z-index: -100;
 	}
 	.content {
 		position: absolute;
