@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 20:46:09
- * @LastEditTime: 2022-08-02 18:08:17
+ * @LastEditTime: 2022-09-03 19:36:12
  * @FilePath: /front-end/src/views/Login/index.vue
  * @Description: 登录界面
 -->
@@ -95,8 +95,8 @@
 </template>
 
 <script setup lang="ts">
-	import Login from './svg/Login.vue'
-	import Signup from './svg/Signup.vue'
+	import Login from '@/svg/Login.vue'
+	import Signup from '@/svg/Signup.vue'
 	import {
 		PCButton,
 		PEButton,

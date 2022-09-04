@@ -1,17 +1,13 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-13 10:59:16
- * @LastEditTime: 2022-05-15 17:07:27
- * @FilePath: /front-end/src/views/Login/svg/Signup.vue
+ * @LastEditTime: 2022-09-03 19:54:37
+ * @FilePath: /front-end/src/svg/Signup.vue
  * @Description: 注册面
 -->
 
 <template>
-	<Transition
-		@enter="enter"
-		@leave="leave"
-		@beforeEnter="beforeEnter"
-	>
+	<Transition @enter="enter" @leave="leave" @beforeEnter="beforeEnter">
 		<svg
 			v-if="props.flag"
 			xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-	import { enterFS, leaveFS } from '../hooks/in-out'
+	import { enterFS, leaveFS } from '@/hooks/in-out'
 	import gsap from 'gsap'
 	const props = defineProps<{
 		flag: boolean

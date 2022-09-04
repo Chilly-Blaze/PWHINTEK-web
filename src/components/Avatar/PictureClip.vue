@@ -1,8 +1,8 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-08-15 22:51:08
- * @LastEditTime: 2022-08-31 22:04:50
- * @FilePath: /front-end/src/components/Card/PictureClip.vue
+ * @LastEditTime: 2022-09-03 15:37:14
+ * @FilePath: /front-end/src/components/Avatar/PictureClip.vue
  * @Description: 图片裁切卡片
  * Copyright (c) 2022 by ChillyBlaze l135163642@gmail.com, All Rights Reserved. 
 -->
@@ -37,7 +37,7 @@
 	const emits = defineEmits(['data', 'done'])
 	// 接收本地图片路径src
 	const props = defineProps<{
-		src: string
+		src: string | undefined
 	}>()
 	const cropper = ref()
 	const img = ref<HTMLImageElement>()

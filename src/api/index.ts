@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-25 18:59:32
- * @LastEditTime: 2022-08-30 21:29:55
+ * @LastEditTime: 2022-09-01 23:35:04
  * @FilePath: /front-end/src/api/index.ts
  * @Description:统一api封装
  */
@@ -22,6 +22,8 @@ export const rLogout = () => service.post<Result>('user/logout')
 export const rMyInfo = () => service.get<Result>('user/my_info')
 export const rUpdAvatar = (bytes: FormData) =>
 	service.post<Result>('user/upd_avatar', bytes)
+export const rGetAvatar = (filename: string) =>
+	'http://localhost:8080/user/gt_avatar/' + filename
 
 export const rMyArticle = (page: number) =>
 	service.get<Result>(`article/my/${page}`)

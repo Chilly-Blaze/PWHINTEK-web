@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-05-03 10:09:33
- * @LastEditTime: 2022-08-30 10:57:15
+ * @LastEditTime: 2022-09-04 15:33:57
  * @FilePath: /front-end/src/assets/mixin.scss
  * @Description: 统一变量定义
  * 命名规则：对象+(场景)+属性
@@ -13,13 +13,14 @@
 	--stroke-hint-success-color: #084;
 	--stroke-hint-warn-color: #fb5;
 	--stroke-hint-error-color: #f00;
-	--font-color: #889;
-	--font-hint-color: #ddd;
+	--font-color: #888;
+	--font-hint-color: #bbb;
 	--font-hover-color: #fcf;
 	--font-identified-color: #f7d;
 	--component-background-color: #fff;
 	--component-hint-color: #fff8ff;
 
+	--component-vague-filter: rgba(255,176,255,0.2);
 	--component-light-shadow: 0 1px 3px rgba(143, 136, 143, 0.3);
 	--component-thick-shadow: 0 2px 6px rgba(143, 136, 143, 0.7);
 
@@ -29,4 +30,6 @@
 	--hint-font-size: 14px;
 	--common-font-size: 16px;
 	--highlight-font-size: 20px;
+
+	--click-transition:0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
