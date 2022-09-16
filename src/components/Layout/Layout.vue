@@ -1,7 +1,7 @@
 <!--
  * @Author: ChillyBlaze
  * @Date: 2022-05-23 20:38:11
- * @LastEditTime: 2022-09-01 11:00:25
+ * @LastEditTime: 2022-09-16 15:04:15
  * @FilePath: /front-end/src/components/Layout/Layout.vue
  * @Description: 主界面统一布局
 -->
@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 	import { RouterView } from 'vue-router'
-	import Logo from '@/components/Logo/Logo.vue'
+	import Logo from '@/svg/Logo.vue'
 </script>
 
 <style scoped lang="scss">
@@ -23,22 +23,22 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		max-width: 800px;
+		width: 100%;
+		max-width: 80vw;
 		left: 0;
 		right: 0;
 		top: 0;
 		bottom: 0;
 		margin: auto;
-		background-color: red;
 		opacity: 0.5;
+		background-color: white;
 		z-index: -100;
 	}
 	.content {
 		position: absolute;
-		display: grid;
+		width: 90%;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		text-align: center;
 	}
 </style>

@@ -1,7 +1,7 @@
 /*
  * @Author: ChillyBlaze
  * @Date: 2022-04-23 14:12:27
- * @LastEditTime: 2022-08-02 18:07:42
+ * @LastEditTime: 2022-09-13 19:08:52
  * @FilePath: /front-end/src/utils/request.ts
  * @Description: Axios配置
  */
@@ -10,7 +10,7 @@ import { PMessage } from '@/components'
 
 const service = axios.create({
 	baseURL: '/api',
-	timeout: 5000,
+	timeout: 1000,
 })
 
 service.interceptors.request.use(
